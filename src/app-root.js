@@ -1,6 +1,7 @@
 import { main } from "./app.mjs";
 import { setContext, setWidth, setHeight } from "./ns/canvas.ffi.mjs";
-import { handleTap } from "./ns.ffi.mjs";
+import { getDispatch } from "./ns.ffi.mjs";
+import { eventFromTap } from "./ns/event.ffi.mjs";
 
 export function canvasReady(args) {
 	console.log("Canvas Ready.");
@@ -15,6 +16,8 @@ export function canvasReady(args) {
 	main();
 }
 
-export function onTap(evt) {
-	handleTap(evt);
+export function handleTap(evt) {
+	let event = eventFromTap(evt);
+	let dispatch = getDispatch();
+	dispatch(event);
 }

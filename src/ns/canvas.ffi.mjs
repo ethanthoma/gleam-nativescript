@@ -74,9 +74,21 @@ export function drawPolygon(points, closed) {
 }
 
 export function fill(color) {
+	if (!ctx) return;
 	ctx.fillStyle = $color.to_css_rgba_string(color);
 }
 
 export function translate(x, y) {
+	if (!ctx) return;
 	ctx.translate(x, y);
+}
+
+export function save() {
+	if (!ctx) return;
+	ctx.save();
+}
+
+export function restore() {
+	if (!ctx) return;
+	ctx.restore();
 }

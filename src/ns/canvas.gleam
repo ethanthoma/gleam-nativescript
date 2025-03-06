@@ -51,15 +51,23 @@ pub fn blank() -> RenderAction {
 pub fn render(action action: RenderAction) {
   case action {
     Blank -> Nil
+
     Picture(picture:) -> draw(picture:)
+
     Fill(action:, color:) -> {
-      do_fill(color:)
-      render(action:)
+      do_save()
+      do_fill(color)
+      render(action)
+      do_restore()
     }
+
     Translate(action:, x:, y:) -> {
-      do_translate(x:, y:)
-      render(action:)
+      do_save()
+      do_translate(x, y)
+      render(action)
+      do_restore()
     }
+
     Combine(actions:) -> list.each(actions, render)
   }
 }
@@ -78,3 +86,9 @@ fn do_fill(color color: Color) -> Nil
 
 @external(javascript, "./canvas.ffi.mjs", "translate")
 fn do_translate(x x: Float, y y: Float) -> Nil
+
+@external(javascript, "./canvas.ffi.mjs", "save")
+fn do_save() -> Nil
+
+@external(javascript, "./canvas.ffi.mjs", "restore")
+fn do_restore() -> Nil

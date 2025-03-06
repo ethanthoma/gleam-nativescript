@@ -2,7 +2,6 @@
 # You typically do not need to edit this file
 
 packages = [
-  { name = "effect", version = "2.1.1", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "effect", source = "hex", outer_checksum = "DFEF42F54B8588A432196FA22945B5E1D56E7D28187CFDE955E114711156F0B0" },
   { name = "gleam_community_colour", version = "1.4.1", build_tools = ["gleam"], requirements = ["gleam_json", "gleam_stdlib"], otp_app = "gleam_community_colour", source = "hex", outer_checksum = "386CB9B01B33371538672EEA8A6375A0A0ADEF41F17C86DDCB81C92AD00DA610" },
   { name = "gleam_json", version = "2.3.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_json", source = "hex", outer_checksum = "C55C5C2B318533A8072D221C5E06E5A75711C129E420DD1CE463342106012E5D" },
   { name = "gleam_stdlib", version = "0.55.0", build_tools = ["gleam"], requirements = [], otp_app = "gleam_stdlib", source = "hex", outer_checksum = "32D8F4AE03771516950047813A9E359249BD9FBA5C33463FDB7B953D6F8E896B" },
@@ -10,7 +9,6 @@ packages = [
 ]
 
 [requirements]
-effect = { version = ">= 2.1.1 and < 3.0.0" }
 gleam_community_colour = { version = ">= 1.4.1 and < 2.0.0" }
 gleam_stdlib = { version = ">= 0.44.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }

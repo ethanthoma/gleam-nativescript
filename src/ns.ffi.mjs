@@ -1,24 +1,29 @@
-// NS Framework FFI for Gleam
-// This provides an API for NativeScript + Canvas compatible with the effect library
-import { Screen } from "@nativescript/core";
-
 import * as $event from "./ns/event.mjs";
-import { Tap } from "./ns/gesture.mjs";
-import { Vec2 } from "./ns/vec2.mjs";
 
 import { renderAction, clearCanvas } from "./ns/canvas.ffi.mjs";
 
-// Global state
+////////// Global state //////////
+
 let currentModel = null;
 let updateFn = null;
 let renderFn = null;
-let lastTime = 0;
-let deltaTime = 0;
 let queue = [];
-let animationFrameId = null;
 let dispatchFn = null;
 
-// Start a NS application
+const FIXED_DELTA = 1000 / 60;
+let lastTime = 0;
+let deltaTime = 0;
+let accumulator = 0;
+let animationFrameId = null;
+
+let counterUps = 0;
+let counterFps = 0;
+let currentFps = 0;
+let currentUps = 0;
+let lastDisplayTime = 0;
+
+////////// Start //////////
+
 export function start({ init, update, render }, flags) {
 	try {
 		console.log("Starting app...");
@@ -62,16 +67,39 @@ function startGameLoop() {
 
 function gameLoop(timestamp) {
 	const now = timestamp;
-	deltaTime = now - lastTime || 16.6;
+	const frameTime = now - (lastTime || now);
+	lastTime = now;
+
+	const maxFrameTime = 250;
+	const clampedFrameTime = Math.min(frameTime, maxFrameTime);
+
+	accumulator += clampedFrameTime;
 
 	try {
-		if (deltaTime > 16.6) {
+		while (accumulator >= FIXED_DELTA) {
+			dispatchFn(new $event.Tick(FIXED_DELTA));
+
 			flush();
 
-			lastTime = now;
+			accumulator -= FIXED_DELTA;
+			counterUps++;
 		}
 
-		renderFrame();
+		const alpha = accumulator / FIXED_DELTA;
+
+		counterFps++;
+		renderFrame(alpha);
+
+		if (now - lastDisplayTime >= 1000) {
+			currentFps = counterFps;
+			currentUps = counterUps;
+
+			console.log(`FPS: ${currentFps}, UPS: ${currentUps}`);
+
+			counterFps = 0;
+			counterUps = 0;
+			lastDisplayTime = now;
+		}
 
 		animationFrameId = requestAnimationFrame(gameLoop);
 	} catch (error) {
@@ -99,6 +127,7 @@ function renderFrame() {
 }
 
 ////////// Event //////////
+
 function flush() {
 	while (queue.length > 0) {
 		const event = queue.shift();
@@ -139,11 +168,6 @@ function handleEvent(event) {
 	}
 }
 
-export function handleTap(evt) {
-	if (!dispatchFn) return;
-
-	const x = evt.getX() * Screen.mainScreen.scale;
-	const y = evt.getY() * Screen.mainScreen.scale;
-
-	dispatchFn(new $event.Gesture(new Tap(new Vec2(x, y))));
+export function getDispatch() {
+	return dispatchFn;
 }

@@ -8,7 +8,6 @@ runtime = "nodejs"
 
 [dependencies]
 gleam_stdlib = ">= 0.44.0 and < 2.0.0"
-effect = ">= 2.1.1 and < 3.0.0"
 gleam_community_colour = ">= 1.4.1 and < 2.0.0"
 
 [dev-dependencies]
