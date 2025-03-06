@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+mkdir -p build/dev/javascript/app/ 
+
+# copy xml and css files
+rsync -av --include='*/' --include='*.css' --include='*.xml' --exclude='*' src/ build/dev/javascript/app/ 
+
+# build gleam to js
+gleam build

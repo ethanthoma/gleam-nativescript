@@ -1,0 +1,15 @@
+{
+  "name": "game",
+  "main": "build/dev/javascript/app/init.js",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@nativescript/canvas": "^1.1.0",
+    "@nativescript/core": "~8.9.0",
+    "@nativescript/theme": "^3.1.0"
+  },
+  "devDependencies": {
+    "@nativescript/android": "8.9.1",
+    "@nativescript/webpack": "~5.0.0"
+  }
+}

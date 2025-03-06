@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# start android daemon
+sudo adb devices
+
+ns run android

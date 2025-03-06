@@ -1,0 +1,34 @@
+*
+
+# git
+!.gitignore
+!README.md
+
+# nix config
+!flake.nix
+!flake.lock
+
+# js config
+!package.json
+!package-lock.json
+
+# nativescript config
+!jsconfig.json
+!webpack.config.js
+!nativescript.config.ts
+
+# gleam config
+!gleam.toml
+!manifest.toml
+
+# nativescript boilerplate
+!App_Resources/
+!App_Resources/**/*
+
+# src files
+!src/
+!src/**/*
+
+# scripts
+!bin/
+!bin/**/*
