@@ -2,6 +2,9 @@
 
 mkdir -p build/dev/javascript/app/ 
 
+# remove old
+rm -rf build/dev/javascript/app/*
+
 # copy xml and css files
 rsync -av --include='*/' --include='*.css' --include='*.xml' --exclude='*' src/ build/dev/javascript/app/ 
 

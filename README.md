@@ -1,24 +1,22 @@
-# game
+# Gleam NativeScript
 
-[![Package Version](https://img.shields.io/hexpm/v/game)](https://hex.pm/packages/game)
-[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/game/)
+This is a POC of using Gleam as the primary language for mobile app dev
 
-```sh
-gleam add game@1
+## Running
+
+> [!IMPORTANT]
+> You will need flakes enabled or have node + android SDK installed
+
+First, build the app via:
+```su
+nix shell
+./bin/build
 ```
-```gleam
-import game
 
-pub fn main() {
-  // TODO: An example of the project in use
-}
+This will build the application. You can run it on an Android device via:
+```su
+sudo adb devices
+ns run android
 ```
 
-Further documentation can be found at <https://hexdocs.pm/game>.
-
-## Development
-
-```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-```
+Look at the NativeScript docs for details on running on an emulator or IOS device.

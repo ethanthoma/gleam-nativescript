@@ -1,6 +1,6 @@
 import * as $event from "./ns/event.mjs";
-
-import { renderAction, clearCanvas } from "./ns/canvas.ffi.mjs";
+import * as $diagram from "./ns/diagram.mjs";
+import { clearCanvas } from "./ns/diagram.ffi.mjs";
 
 ////////// Global state //////////
 
@@ -57,15 +57,23 @@ export function start({ init, update, render }, flags) {
 
 ////////// Game Loop //////////
 
+let started = false;
+let cancelled = false;
+
 function startGameLoop() {
 	console.log("Starting animation loop");
 
+	started = true;
 	renderFrame();
 
 	animationFrameId = requestAnimationFrame(gameLoop);
 }
 
 function gameLoop(timestamp) {
+	if (!started || cancelled) {
+		return;
+	}
+
 	const now = timestamp;
 	const frameTime = now - (lastTime || now);
 	lastTime = now;
@@ -118,9 +126,9 @@ function renderFrame() {
 	try {
 		clearCanvas();
 
-		const renderActions = renderFn(currentModel);
+		const diagram = renderFn(currentModel);
 
-		renderAction(renderActions);
+		$diagram.render(diagram);
 	} catch (error) {
 		console.error("Error rendering frame:", error);
 	}
@@ -159,11 +167,10 @@ function handleEvent(event) {
 		}
 		console.log("Application quit requested");
 	} else if (event instanceof $event.Sequence) {
-		event.Sequence.forEach((e) => handleEvent(e));
+		event[0].forEach((e) => handleEvent(e));
 	} else if (event instanceof $event.Effect) {
-		event.Effect(dispatchFn);
+		event[0](dispatchFn);
 	} else {
-		console.log(event);
 		dispatchFn(event);
 	}
 }

@@ -1,11 +1,11 @@
-import ns/canvas
+import ns/diagram.{type Diagram}
 import ns/event.{type Event}
 
 pub opaque type App(flags, model, msg) {
   App(
     init: fn(flags) -> #(model, Event(msg)),
     update: fn(model, Event(msg)) -> #(model, Event(msg)),
-    render: fn(model) -> canvas.RenderAction,
+    render: fn(model) -> Diagram,
   )
 }
 
@@ -15,7 +15,7 @@ pub type Error =
 pub fn application(
   init: fn(flags) -> #(model, Event(msg)),
   update: fn(model, Event(msg)) -> #(model, Event(msg)),
-  render: fn(model) -> canvas.RenderAction,
+  render: fn(model) -> Diagram,
 ) -> App(flags, model, msg) {
   App(init, update, render)
 }

@@ -6,10 +6,6 @@
     flake-utils.url = "github:numtide/flake-utils";
     nix-gleam.url = "github:arnarg/nix-gleam";
     android.url = "github:tadfisher/android-nixpkgs";
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -19,7 +15,6 @@
       flake-utils,
       nix-gleam,
       android,
-      nix-ld,
     }:
     {
       overlays.default = nixpkgs.lib.composeManyExtensions [
@@ -59,13 +54,16 @@
 
             pkgs.oxlint
             pkgs.biome
+            pkgs.kotlin-language-server
           ];
 
           shellHook = ''
-            mkdir -p cache_dir
-            npm config set prefix cache_dir
-            npm install -g nativescript
             export PATH="$PATH:cache_dir/bin"
+            if [ ! -d cache_dir ]; then
+                mkdir -p cache_dir
+                npm config set prefix cache_dir
+                npm install -g nativescript
+            fi
           '';
         };
       }

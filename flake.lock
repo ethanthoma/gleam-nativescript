@@ -92,26 +92,6 @@
         "type": "github"
       }
     },
-    "nix-ld": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1740995332,
-        "narHash": "sha256-SELnZZg9LOhw+kz60yEAr3l1plu70rBLInMRszLHtuc=",
-        "owner": "Mic92",
-        "repo": "nix-ld",
-        "rev": "090c2003e3faa739e5a94e0a3cd782a1ccc40964",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "nix-ld",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1740828860,
@@ -149,7 +129,6 @@
         "android": "android",
         "flake-utils": "flake-utils_2",
         "nix-gleam": "nix-gleam",
-        "nix-ld": "nix-ld",
         "nixpkgs": "nixpkgs_2"
       }
     },
